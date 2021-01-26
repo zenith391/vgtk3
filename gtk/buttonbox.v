@@ -13,18 +13,15 @@ pub fn new_vbutton_box() ButtonBox {
 }
 
 pub fn (b ButtonBox) add(widget IWidget) {
-	wgt := widget.get_gtk_widget()
-	C.gtk_container_add(b.c, wgt)
+	C.gtk_container_add(b.c, widget.c)
 }
 
 pub fn (b ButtonBox) pack_start(child IWidget, expand bool, fill bool, padding u32) {
-	child_ := child.get_gtk_widget()
-	C.gtk_box_pack_start(voidptr(b.c), voidptr(child_), expand, fill, padding)
+	C.gtk_box_pack_start(voidptr(b.c), voidptr(child.c), expand, fill, padding)
 }
 
 pub fn (b ButtonBox) pack_end(child IWidget, expand bool, fill bool, padding u32) {
-	child_ := child.get_gtk_widget()
-	C.gtk_box_pack_end(voidptr(b.c), voidptr(child_), expand, fill, padding)
+	C.gtk_box_pack_end(voidptr(b.c), voidptr(child.c), expand, fill, padding)
 }
 
 pub fn (b ButtonBox) set_layout(layout ButtonBoxStyle) {
@@ -42,11 +39,6 @@ pub fn (b ButtonBox) set_child_non_homogeneous(child Widget, is_secondary bool) 
 // INHERITED FROM WIDGET
 pub fn (b &ButtonBox) show() {
 	C.gtk_widget_show(b.c)
-}
-
-// IMPLEMENTING IWidget
-pub fn (b &ButtonBox) get_gtk_widget() &C.GtkWidget {
-	return b.c
 }
 
 // CUSTOM API's

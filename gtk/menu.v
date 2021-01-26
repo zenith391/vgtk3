@@ -34,19 +34,11 @@ pub fn new_menu_item() MenuItem {
 }
 
 // MENUBAR
-pub fn (mb &MenuBar) get_gtk_widget() &C.GtkWidget {
-	return mb.c
-}
-
 pub fn (mb MenuBar) append(item MenuItem) {
 	C.gtk_menu_shell_append(mb.c, item.c)
 }
 
 // MENU
-pub fn (m &Menu) get_gtk_widget() &C.GtkWidget {
-	return m.c
-}
-
 pub fn (m Menu) append(item MenuItem) {
 	C.gtk_menu_shell_append(m.c, item.c)
 }
@@ -82,8 +74,4 @@ pub fn (mi MenuItem) set_accel_path(label string) {
 
 pub fn (mi MenuItem) get_accel_path() string {
 	return tos3(C.gtk_menu_item_get_accel_path(mi.c))
-}
-
-pub fn (mi &MenuItem) get_gtk_widget() &C.GtkWidget {
-	return mi.c
 }

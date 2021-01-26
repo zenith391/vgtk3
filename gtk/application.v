@@ -25,8 +25,7 @@ pub fn (app Application) new_window() Window {
 }
 
 pub fn (app Application) add_window(window Window) {
-	window_ := window.get_gtk_widget()
-	C.gtk_application_add_window(app.c, window_)
+	C.gtk_application_add_window(app.c, window.c)
 }
 
 pub fn (app Application) remove_window(window Window) {

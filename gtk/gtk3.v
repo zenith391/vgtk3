@@ -16,8 +16,7 @@ pub fn main_quit() {
 }
 
 pub fn add_custom_signal(widget IWidget, name string, handler fn (&C.GtkWidget, IWidget)) int {
-	w := widget.get_gtk_widget() // must be stored in a variable to avoid some weird C compilation bugs
-	return int(C.g_signal_connect(voidptr(w), name.str, handler, voidptr(&widget)))
+	return int(C.g_signal_connect(voidptr(widget.c), name.str, handler, voidptr(&widget)))
 }
 
 // Castings

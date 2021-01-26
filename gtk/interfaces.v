@@ -1,7 +1,7 @@
 module gtk
 
 pub interface IWidget {
-	get_gtk_widget() &C.GtkWidget
+	c &C.GtkWidget
 }
 
 pub interface IContainer {

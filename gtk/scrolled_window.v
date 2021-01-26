@@ -9,18 +9,12 @@ pub fn new_scrolled_window() ScrolledWindow {
 }
 
 pub fn (b ScrolledWindow) add(widget IWidget) {
-	wgt := widget.get_gtk_widget()
-	C.gtk_container_add(b.c, wgt)
+	C.gtk_container_add(b.c, widget.c)
 }
 
 // INHERITED FROM WIDGET
 pub fn (b &ScrolledWindow) show() {
 	C.gtk_widget_show(b.c)
-}
-
-// IMPLEMENTING IWidget
-pub fn (b &ScrolledWindow) get_gtk_widget() &C.GtkWidget {
-	return b.c
 }
 
 // CUSTOM API's

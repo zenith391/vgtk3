@@ -16,8 +16,7 @@ pub fn (w Widget) in_destruction() bool {
 }
 
 pub fn (w Widget) destroyed(widget IWidget) {
-	wgt := widget.get_gtk_widget()
-	C.gtk_widget_destroyed(w.c, wgt)
+	C.gtk_widget_destroyed(w.c, widget.c)
 }
 
 pub fn (w Widget) unparent() {
@@ -119,8 +118,7 @@ pub fn (w Widget) set_sensitive(sensitive bool) {
 }
 
 pub fn (w Widget) set_parent(parent IWidget) {
-	parent_ := parent.get_gtk_widget()
-	C.gtk_widget_set_parent(w.c, parent_)
+	C.gtk_widget_set_parent(w.c, parent.c)
 }
 
 // TODO: void C.gtk_widget_set_parent_window (GtkWidget *widget, GdkWindow *parent_window)
@@ -154,15 +152,13 @@ pub fn (w Widget) get_ancestor(widget_type C._GType) &C.GtkWidget {
 // TODO: GdkVisual * C.gtk_widget_get_visual (GtkWidget *widget)
 // TODO: void C.gtk_widget_set_visual (GtkWidget *widget, GdkVisual *visual)
 pub fn (w Widget) is_ancestor(ancestor IWidget) bool {
-	ancestor_ := ancestor.get_gtk_widget()
-	return C.gtk_widget_is_ancestor(w.c, ancestor_)
+	return C.gtk_widget_is_ancestor(w.c, ancestor.c)
 }
 
 pub fn (w Widget) translate_coordinates(dest_widget IWidget, x int, y int) (int, int) {
-	dest_widget_ := dest_widget.get_gtk_widget()
 	out_x := 0
 	out_y := 0
-	C.gtk_widget_translate_coordinates(w.c, dest_widget_, x, y, &out_x, &out_y)
+	C.gtk_widget_translate_coordinates(w.c, dest_widget.c, x, y, &out_x, &out_y)
 	return out_x, out_y
 }
 
@@ -287,13 +283,11 @@ pub fn (w Widget) get_no_show_all() bool {
 
 // TODO: GList * C.gtk_widget_list_mnemonic_labels (GtkWidget *widget)
 pub fn (w Widget) add_mnemonic_label(label IWidget) {
-	l := label.get_gtk_widget()
-	C.gtk_widget_add_mnemonic_label(w.c, l)
+	C.gtk_widget_add_mnemonic_label(w.c, label.c)
 }
 
 pub fn (w Widget) remove_mnemonic_label(label IWidget) {
-	l := label.get_gtk_widget()
-	C.gtk_widget_remove_mnemonic_label(w.c, l)
+	C.gtk_widget_remove_mnemonic_label(w.c, label.c)
 }
 
 pub fn (w Widget) error_bell() {
@@ -326,8 +320,7 @@ pub fn (w Widget) get_tooltip_window() Window {
 }
 
 pub fn (w Widget) set_tooltip_window(window Window) {
-	window_ := window.get_gtk_widget()
-	C.gtk_widget_set_tooltip_window(w.c, window_)
+	C.gtk_widget_set_tooltip_window(w.c, window.c)
 }
 
 pub fn (w Widget) get_has_tooltip() bool {

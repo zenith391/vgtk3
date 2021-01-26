@@ -80,8 +80,7 @@ pub fn (w Window) set_transient_for(parrent Window) {
 }
 
 pub fn (w Window) set_attached_to(widget IWidget) {
-	wi := widget.get_gtk_widget()
-	C.gtk_window_set_attached_to(w.c, wi)
+	C.gtk_window_set_attached_to(w.c, widget.c)
 }
 
 pub fn (w Window) set_destroy_with_parent(setting bool) {
@@ -235,8 +234,7 @@ pub fn (w Window) set_has_user_ref_count(setting bool) {
 }
 
 pub fn (w Window) set_titlebar(widget IWidget) {
-	wgt := widget.get_gtk_widget()
-	C.gtk_window_set_titlebar(w.c, wgt)
+	C.gtk_window_set_titlebar(w.c, widget.c)
 }
 
 pub fn (w Window) get_titlebar() &C.GtkWidget {
@@ -249,8 +247,7 @@ pub fn (w Window) set_interactive_debugging(enable bool) {
 
 // INHERITED FROM CONTAINER
 pub fn (w Window) add(widget IWidget) {
-	wgt := widget.get_gtk_widget()
-	C.gtk_container_add(w.c, wgt)
+	C.gtk_container_add(w.c, widget.c)
 }
 
 pub fn (w Window) set_border_width(border_width int) {
@@ -264,11 +261,6 @@ pub fn (w Window) show() {
 
 pub fn (w Window) show_all() {
 	C.gtk_widget_show_all(w.c)
-}
-
-// IMPLEMENTING IWidget
-pub fn (w &Window) get_gtk_widget() &C.GtkWidget {
-	return voidptr(w.c)
 }
 
 // CUSTOM API's

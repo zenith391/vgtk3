@@ -20,21 +20,21 @@ fn run_code(mi gtk.Button, data voidptr) {
 	app := &AppState(data)
  	input := app.code.get_text()
 
-	os.rm(source)
+	os.rm(source) or { panic(err) }
 	mut f := os.open_file(source, 'w+') or { panic(err) }
-	f.writeln(input)
+	f.writeln(input) or { panic(err) }
 	f.close()
 
 	mut cmd := os.Command{
 		path: 'v run runme.v'
 		redirect_stdout: true
 	}
-	cmd.start()
+	cmd.start() or { panic(err) }
 	mut out := ''
 	for !cmd.eof {
 		out += cmd.read_line()
 	}
-	cmd.close()
+	cmd.close() or { panic(err) }
 	app.result.set_text(out)
 }
 

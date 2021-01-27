@@ -37,11 +37,6 @@ pub fn (b &TextView) show() {
 	C.gtk_widget_show(b.c)
 }
 
-// IMPLEMENTING IWidget
-pub fn (b &TextView) get_gtk_widget() &C.GtkWidget {
-	return b.c
-}
-
 // CUSTOM API's
 pub fn (b &TextView) on(event_name string, handler fn (TextView, voidptr), data voidptr) int {
 	return int(C.g_signal_connect(b.c, event_name.str, handler, data))

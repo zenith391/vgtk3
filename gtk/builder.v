@@ -99,17 +99,6 @@ pub fn (b Builder) add_objects_from_resource(resource_path string, object_ids []
 	return ret
 }
 
-/*
-pub fn (b Builder) extend_with_template(widget IWidget, template_type C.GType, buffer string) ?u32 {
-	err := &C._GError{0}
-	wgt := widget.get_gtk_widget()
-	ret := C.gtk_builder_extend_with_template(b.c, wgt, template_type, buffer.str, buffer.len, &err)
-	if err != 0 {
-		return error(tos3(err.message))
-	}
-	return ret
-}
-*/
 pub fn (b Builder) get_object(name string) &C._GObject {
 	return C.gtk_builder_get_object(b.c, name.str)
 }

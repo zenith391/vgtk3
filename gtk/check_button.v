@@ -89,8 +89,7 @@ pub fn (c CheckButton) get_focus_on_click() bool {
 }
 
 pub fn (c CheckButton) set_image(img_widget IWidget) {
-	wi := img_widget.get_gtk_widget()
-	C.gtk_button_set_image(c.c, wi)
+	C.gtk_button_set_image(c.c, img_widget.c)
 }
 
 pub fn (c CheckButton) get_image() &C.GtkWidget {
@@ -124,14 +123,4 @@ pub fn (c &CheckButton) on(event_name string, handler fn (CheckButton, voidptr),
 // Inherited from Bin
 pub fn (c CheckButton) get_child() Widget {
 	return Widget{C.gtk_bin_get_child(c.c)}
-}
-
-// Inherited from Container
-// Inherited from Widget
-// Implemented from Buildable
-// Implemented from Actionable
-// Implemented from Activatable
-// Implemented from IWidget
-pub fn (c &CheckButton) get_gtk_widget() &C.GtkWidget {
-	return c.c
 }

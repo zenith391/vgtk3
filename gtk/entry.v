@@ -298,11 +298,6 @@ pub fn (e Entry) show_all() {
 	C.gtk_widget_show_all(e.c)
 }
 
-// IMPLEMENTING IWidget
-pub fn (e &Entry) get_gtk_widget() &C.GtkWidget {
-	return e.c
-}
-
 // CUSTOM API's
 pub fn (e &Entry) on(event_name string, handler fn (Entry, voidptr), data voidptr) int {
 	return int(C.g_signal_connect(e.c, event_name.str, handler, data))

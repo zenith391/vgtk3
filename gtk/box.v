@@ -24,13 +24,11 @@ pub fn new_vbox(space int) Box {
 }
 
 pub fn (b Box) pack_start(child IWidget, expand bool, fill bool, padding u32) {
-	child_ := child.get_gtk_widget()
-	C.gtk_box_pack_start(voidptr(b.c), voidptr(child_), expand, fill, padding)
+	C.gtk_box_pack_start(voidptr(b.c), b.c, expand, fill, padding)
 }
 
 pub fn (b Box) pack_end(child IWidget, expand bool, fill bool, padding u32) {
-	child_ := child.get_gtk_widget()
-	C.gtk_box_pack_end(voidptr(b.c), voidptr(child_), expand, fill, padding)
+	C.gtk_box_pack_end(voidptr(b.c), b.c, expand, fill, padding)
 }
 
 pub fn (b Box) get_homogeneous() bool {
@@ -50,24 +48,20 @@ pub fn (b Box) set_spacing(spacing int) {
 }
 
 pub fn (b Box) reorder_child(child IWidget, position int) {
-	child_ := child.get_gtk_widget()
-	C.gtk_box_reorder_child(voidptr(b.c), voidptr(child_), position)
+	C.gtk_box_reorder_child(voidptr(b.c), b.c, position)
 }
 
 pub fn (b Box) query_child_packing(child IWidget) BoxQuery {
-	child_ := child.get_gtk_widget()
 	expand := false
 	fill := false
 	padding := u32(0)
 	pack_type := PackType(0)
-	C.gtk_box_query_child_packing(voidptr(b.c), voidptr(child_), &expand, &fill, &padding,
-		&pack_type)
+	C.gtk_box_query_child_packing(voidptr(b.c), b.c, &expand, &fill, &padding, &pack_type)
 	return BoxQuery{expand, fill, padding, pack_type}
 }
 
 pub fn (b Box) set_child_packing(child IWidget, expand bool, fill bool, padding u32, pack_type PackType) {
-	child_ := child.get_gtk_widget()
-	C.gtk_box_set_child_packing(b.c, child_, expand, fill, padding, pack_type)
+	C.gtk_box_set_child_packing(b.c, child.c, expand, fill, padding, pack_type)
 }
 
 pub fn (b Box) get_baseline_position() BaselinePosition {
@@ -83,8 +77,7 @@ pub fn (b Box) get_center_widget() &C.GtkWidget {
 }
 
 pub fn (b Box) set_center_widget(widget IWidget) {
-	wgt := widget.get_gtk_widget()
-	C.gtk_box_set_center_widget(b.c, wgt)
+	C.gtk_box_set_center_widget(b.c, widget.c)
 }
 
 // Inherited from Widget
@@ -106,13 +99,11 @@ pub fn (b Box) set_valign(align Align) {
 
 // Inherited from Container
 pub fn (b Box) add(widget IWidget) {
-	wgt := widget.get_gtk_widget()
-	C.gtk_container_add(b.c, wgt)
+	C.gtk_container_add(b.c, widget.c)
 }
 
 pub fn (b Box) remove(widget IWidget) {
-	wgt := widget.get_gtk_widget()
-	C.gtk_container_remove(b.c, wgt)
+	C.gtk_container_remove(b.c, widget.c)
 }
 
 // Implementing GtkOrientable
@@ -122,9 +113,4 @@ pub fn (b Box) set_orientation(orientation Orientation) {
 
 pub fn (b Box) get_orientation() Orientation {
 	return Orientation(C.gtk_orientable_get_orientation(b.c))
-}
-
-// Implementing IWidget
-pub fn (b &Box) get_gtk_widget() &C.GtkWidget {
-	return b.c
 }

@@ -63,8 +63,7 @@ pub fn (b Button) get_focus_on_click() bool {
 }
 
 pub fn (b Button) set_image(img_widget IWidget) {
-	wi := img_widget.get_gtk_widget()
-	C.gtk_button_set_image(b.c, wi)
+	C.gtk_button_set_image(b.c, img_widget.c)
 }
 
 pub fn (b Button) get_image() &C.GtkWidget {
@@ -95,11 +94,6 @@ pub fn (b Button) get_event_window() gdk.Window {
 // INHERITED FROM WIDGET
 pub fn (b &Button) show() {
 	C.gtk_widget_show(b.c)
-}
-
-// IMPLEMENTING IWidget
-pub fn (b &Button) get_gtk_widget() &C.GtkWidget {
-	return b.c
 }
 
 // CUSTOM API's

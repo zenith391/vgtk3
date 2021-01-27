@@ -11,8 +11,7 @@ pub struct Container {
 }
 
 pub fn (c &Container) add(widget IWidget) {
-	wgt := widget.get_gtk_widget()
-	C.gtk_container_add(c.c, wgt)
+	C.gtk_container_add(c.c, widget.c)
 }
 
 pub fn (c &Container) set_border_width(border_width int) {

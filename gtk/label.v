@@ -93,8 +93,7 @@ pub fn (l Label) select_region(start_offset int, end_offset int) {
 }
 
 pub fn (l Label) set_mnemonic_widget(widget IWidget) {
-	wgt := widget.get_gtk_widget()
-	C.gtk_label_set_mnemonic_widget(l.c, wgt)
+	C.gtk_label_set_mnemonic_widget(l.c, widget.c)
 }
 
 pub fn (l Label) set_selectable(setting bool) {
@@ -197,10 +196,6 @@ pub fn (l Label) set_track_visited_links(setting bool) {
 
 pub fn (l Label) get_track_visited_links() bool {
 	return C.gtk_label_get_track_visited_links(l.c)
-}
-
-pub fn (l &Label) get_gtk_widget() &C.GtkWidget {
-	return l.c
 }
 
 // Implemented Widget

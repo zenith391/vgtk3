@@ -1,7 +1,7 @@
 module glib
 
 #include <gmodule.h>
-#include <glib/glist.h>
+// #include <glib/glist.h>
 [typedef]
 pub struct C.GList {
 	data voidptr

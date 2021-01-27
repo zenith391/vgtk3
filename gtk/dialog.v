@@ -29,8 +29,7 @@ pub fn new_dialog() Dialog {
 }
 
 pub fn new_dialog_from_parent(title string, parent Window, flags DialogFlags) Dialog {
-	parent_ := parent.get_gtk_widget()
-	return Dialog{C.gtk_dialog_new_with_buttons(title.str, parent_, flags, 0, 0)}
+	return Dialog{C.gtk_dialog_new_with_buttons(title.str, parent.c, flags, 0, 0)}
 }
 
 // TODO: GtkWidget * C.gtk_dialog_new_with_buttons (const gchar *title, GtkWindow *parent, GtkDialogFlags flags, const gchar *first_button_text, ...)
@@ -48,8 +47,7 @@ pub fn (d Dialog) add_button(button_text string, response_id ResponseType) Butto
 
 // TODO: void C.gtk_dialog_add_buttons (GtkDialog *dialog, const gchar *first_button_text, ...)
 pub fn (d Dialog) add_action_widget(child IWidget, response_id ResponseType) {
-	child_ := child.get_gtk_widget()
-	C.gtk_dialog_add_action_widget(d.c, child_, response_id)
+	C.gtk_dialog_add_action_widget(d.c, child.c, response_id)
 }
 
 pub fn (d Dialog) set_default_response(response_id ResponseType) {
@@ -61,8 +59,7 @@ pub fn (d Dialog) set_response_sensitive(response_id ResponseType, setting bool)
 }
 
 pub fn (d Dialog) get_response_for_widget(widget IWidget) int {
-	widget_ := widget.get_gtk_widget()
-	return C.gtk_dialog_get_response_for_widget(d.c, widget_)
+	return C.gtk_dialog_get_response_for_widget(d.c, widget.c)
 }
 
 pub fn (d Dialog) get_widget_for_response(response_id ResponseType) &Widget {
@@ -96,8 +93,7 @@ pub fn (d Dialog) in_destruction() bool {
 }
 
 pub fn (d Dialog) destroyed(widget IWidget) {
-	wgt := widget.get_gtk_widget()
-	C.gtk_widget_destroyed(d.c, wgt)
+	C.gtk_widget_destroyed(d.c, widget.c)
 }
 
 pub fn (d Dialog) unparent() {
@@ -189,8 +185,7 @@ pub fn (d Dialog) set_sensitive(sensitive bool) {
 }
 
 pub fn (d Dialog) set_parent(parent IWidget) {
-	parent_ := parent.get_gtk_widget()
-	C.gtk_widget_set_parent(d.c, parent_)
+	C.gtk_widget_set_parent(d.c, parent.c)
 }
 
 pub fn (d Dialog) set_events(events int) {
@@ -215,15 +210,13 @@ pub fn (d Dialog) get_ancestor(widget_type C._GType) &C.GtkWidget {
 }
 */
 pub fn (d Dialog) is_ancestor(ancestor IWidget) bool {
-	ancestor_ := ancestor.get_gtk_widget()
-	return C.gtk_widget_is_ancestor(d.c, ancestor_)
+	return C.gtk_widget_is_ancestor(d.c, ancestor.c)
 }
 
 pub fn (d Dialog) translate_coordinates(dest_widget IWidget, x int, y int) (int, int) {
-	dest_widget_ := dest_widget.get_gtk_widget()
 	out_x := 0
 	out_y := 0
-	C.gtk_widget_translate_coordinates(d.c, dest_widget_, x, y, &out_x, &out_y)
+	C.gtk_widget_translate_coordinates(d.c, dest_widget.c, x, y, &out_x, &out_y)
 	return out_x, out_y
 }
 
@@ -254,11 +247,6 @@ pub fn (d Dialog) set_default_size(width int, height int) {
 
 pub fn (d Dialog) get_title() string {
 	return tos3(C.gtk_window_get_title(d.c))
-}
-
-// IMPLEMENTING IWidget
-pub fn (d &Dialog) get_gtk_widget() &C.GtkWidget {
-	return d.c
 }
 
 // CUSTOM API's
